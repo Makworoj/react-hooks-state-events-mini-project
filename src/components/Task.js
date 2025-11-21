@@ -1,11 +1,22 @@
 import React from "react";
 
-function Task() {
+function Task({ task, text, category, onDelete }) {
+  // Handle both ways the props might be passed
+  const taskText = task ? task.text : text;
+  const taskCategory = task ? task.category : category;
+  const taskId = task ? task.id : Date.now(); // fallback ID
+
+  const handleDelete = () => {
+    if (onDelete) {
+      onDelete(taskId);
+    }
+  };
+
   return (
     <div className="task">
-      <div className="label">CATEGORY HERE</div>
-      <div className="text">TEXT HERE</div>
-      <button className="delete">X</button>
+      <div className="label">{taskCategory}</div>
+      <div className="text">{taskText}</div>
+      <button className="delete" onClick={handleDelete}>X</button>
     </div>
   );
 }
